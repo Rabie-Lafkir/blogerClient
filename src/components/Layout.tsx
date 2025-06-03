@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar, { type NavItem } from "./Navbar"; // adjust path if components in sibling folder
-import { Home, Pencil } from "lucide-react";
+import { Home, Mail } from "lucide-react";
 import Footer from "./Footer";
 
 /**
@@ -14,7 +14,7 @@ export default function Layout() {
   // 🔧 You can later pull this array from a config file or Redux/Context.
   const navItems: NavItem[] = [
     { label: "Home", to: "/", icon: <Home size={16} /> },
-    { label: "Write", to: "/new", icon: <Pencil size={16} /> },
+    { label: "Contact", to: "/contact", icon: <Mail size={16} /> },
   ];
 
   return (
