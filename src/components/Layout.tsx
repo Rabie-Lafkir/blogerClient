@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar, { type NavItem } from "./Navbar"; // adjust path if components in sibling folder
 import { Home, Pencil } from "lucide-react";
+import Footer from "./Footer";
 
 /**
  * Main shell for the app.
@@ -26,9 +27,7 @@ export default function Layout() {
       </main>
 
       {/* Footer (optional) */}
-      <footer className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">
-        © {new Date().getFullYear()} Pathfinder. All rights reserved.
-      </footer>
+      <Footer></Footer>
     </div>
   );
 }
