@@ -1,15 +1,29 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/Layout";
+import { LoginPage } from "./pages/Login";
+// 📝 Stubs – replace with real pages when ready
+import Home from "./pages/Home";
 
-import './App.css'
-import { Routes, Route } from 'react-router-dom';
-import { LoginPage } from './pages/Login';
-
-function App() {
+/**
+ * Top‑level routing for the app.
+ *
+ * - `/login` renders the standalone Login page (no navbar).
+ * - All other routes are wrapped by <Layout/> which includes navbar + footer.
+ */
+export default function App() {
   return (
     <Routes>
-      {/* Shared wrapper with Navbar, footer, etc. */}
-      <Route element={<LoginPage></LoginPage>} path='/'></Route>
+      {/* Public auth route (no layout) */}
+      <Route path="/login" element={<LoginPage />} />
+
+      {/* All routes that share the navbar/footer go inside Layout */}
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        
+      </Route>
+
+      {/* Catch‑all: redirect unknown paths to home */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
-
-export default App;
