@@ -4,6 +4,7 @@ import { LoginPage } from "./pages/Login";
 // 📝 Stubs – replace with real pages when ready
 import Home from "./pages/Home";
 import { RegisterPage } from "./pages/Register";
+import ContactPage from "./pages/Contact";
 
 /**
  * Top‑level routing for the app.
@@ -21,6 +22,7 @@ export default function App() {
       {/* All routes that share the navbar/footer go inside Layout */}
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/contact" element={<ContactPage />} />
         
       </Route>
 
