@@ -73,7 +73,7 @@ interface HeroProps {
 function HeroBanner({ onSearch }: HeroProps) {
   return (
     <section
-      className="relative flex h-[420px] items-end justify-center bg-cover bg-center lg:h-[520px]"
+      className="relative flex h-[420px] items-center justify-center bg-cover bg-center lg:h-[620px] rounded-b-2xl mx-2"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1500&q=80')",
@@ -81,7 +81,7 @@ function HeroBanner({ onSearch }: HeroProps) {
     >
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
-      <div className="relative z-10 mb-12 text-center text-white">
+      <div className="relative z-10 flex flex-col items-center justify-center mb-0 text-center text-white">
         <h1 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
           Find Your Next Learning Path
         </h1>
@@ -97,7 +97,7 @@ function HeroBanner({ onSearch }: HeroProps) {
               const form = e.target as HTMLFormElement;
               onSearch(form.q.value as string);
             }}
-            className="mt-6 flex max-w-md overflow-hidden rounded-md"
+            className="mt-6 flex max-w-md w-full overflow-hidden rounded-md"
           >
             <input
               name="q"
