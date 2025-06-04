@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/authService';
 import { useAuth } from '../hooks/useAuth';
 
@@ -105,6 +105,7 @@ export const LoginPage = () => {
             {isLoading ? 'Signing in…' : 'Sign In'}
           </button>
         </form>
+        <div className="text-sm text-center text-gray-600 dark:text-gray-300">If you don't have an account, <Link className="text-orange-600 dark:text-orange-400 hover:underline" to="/register">Create an account</Link></div>
       </div>
     </div>
   );
