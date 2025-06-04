@@ -40,7 +40,7 @@ export default function ArticleDetail() {
     <article className="max-w-3xl mx-auto px-4 py-10">
       {/* Cover image */}
       <img
-        src={`http://localhost:5000/uploads/${article.coverImage}`}
+        src={`${import.meta.env.VITE_API_MEDIA}/uploads/${article.coverImage}`}
         alt={article.title}
         className="w-full h-72 object-cover rounded-lg shadow mb-6"
       />
