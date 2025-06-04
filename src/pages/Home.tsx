@@ -73,13 +73,13 @@ interface HeroProps {
 function HeroBanner({ onSearch }: HeroProps) {
   return (
     <section
-      className="relative flex h-[420px] items-center justify-center bg-cover bg-center lg:h-[620px] rounded-b-2xl mx-2"
+      className="relative flex h-[420px] items-center justify-center bg-cover bg-center lg:h-[620px] mx-2 rounded-xl mt-2"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1500&q=80')",
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl" />
 
       <div className="relative z-10 flex flex-col items-center justify-center mb-0 text-center text-white">
         <h1 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
