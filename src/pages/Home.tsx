@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from 'lucide-react';
-
+import heroImg from '../assets/success.jpg';
 /* ------------------------------------------------------------------
  * Home page layout inspired by the “Horizone – Blog Page” shot.
  * - Full‑width hero banner with search.
@@ -26,7 +26,6 @@ const CATEGORIES = [
 const ARTICLES = Array.from({ length: 9 }).map((_, i) => ({
   slug: `sample-article-${i + 1}`,
   title: `Sample Article ${i + 1}: Crafting an Engaging Blog Layout`,
-  img: `https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=1200&q=80&sat=-25&blend=111827&blend-mode=multiply`,
   category: CATEGORIES[(i % (CATEGORIES.length - 1)) + 1],
   author: 'John Doe',
   date: 'Jun 3, 2025',
@@ -73,20 +72,20 @@ interface HeroProps {
 function HeroBanner({ onSearch }: HeroProps) {
   return (
     <section
-      className="relative flex h-[420px] items-end justify-center bg-cover bg-center lg:h-[520px]"
+      className="relative flex h-[420px] items-center justify-center bg-cover bg-center lg:h-[620px] mx-2 rounded-xl mt-2"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1500&q=80')",
+          `url(${heroImg})`,
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl" />
 
-      <div className="relative z-10 mb-12 text-center text-white">
+      <div className="relative z-10 flex flex-col items-center justify-center mb-0 text-center text-white">
         <h1 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
-          Find Your Next Learning Path
+          Chart Your Career Change Journey
         </h1>
         <p className="mt-2 opacity-90">
-          Curated roadmaps &amp; hands‑on stories from successful switchers
+          Real stories from those who successfully pivoted – learn from their wins, mistakes, and lightbulb moments.
         </p>
 
         {/* search */}
@@ -97,7 +96,7 @@ function HeroBanner({ onSearch }: HeroProps) {
               const form = e.target as HTMLFormElement;
               onSearch(form.q.value as string);
             }}
-            className="mt-6 flex max-w-md overflow-hidden rounded-md"
+            className="mt-6 flex max-w-md w-full overflow-hidden rounded-md"
           >
             <input
               name="q"

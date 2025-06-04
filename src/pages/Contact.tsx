@@ -46,7 +46,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-orange-50 dark:bg-neutral-900 px-6 py-16 transition-colors">
+    <div className="min-h-screen bg-stone-300 dark:bg-neutral-800 px-6 pt-[calc(150px_+_2rem)] pb-16 transition-colors">
       <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12">
         {/* Contact Text + Info */}
         <div className="space-y-6 text-gray-800 dark:text-gray-100">
