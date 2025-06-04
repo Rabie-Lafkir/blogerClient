@@ -1,10 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  type ReactNode,
-  useRef,
-  useEffect,
-  useState,
-} from 'react';
+import { type ReactNode, useRef, useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { logout } from '../api/authService';
 
@@ -23,27 +18,17 @@ export default function Navbar({ items, brand }: NavbarProps) {
   const ref = useRef<HTMLElement>(null);
   const { user, setUser } = useAuth();
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 
-  /* ----- blur on scroll (unchanged) ----- */
   useEffect(() => {
-    const nav = ref.current;
-    if (!nav) return;
-
-    const obs = new IntersectionObserver(
-      ([entry]) =>
-        nav.classList.toggle(
-          'backdrop-blur bg-white/60 dark:bg-neutral-900/60 shadow-sm',
-          !entry.isIntersecting
-        ),
-      { rootMargin: '-64px 0px 0px 0px' }
-    );
-
-    obs.observe(document.body);
-    return () => obs.disconnect();
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  /* ----- logout helper ----- */
   const handleLogout = () => {
     logout();
     setUser(null);
@@ -54,12 +39,21 @@ export default function Navbar({ items, brand }: NavbarProps) {
   return (
     <header
       ref={ref}
-      className="sticky top-0 z-50 flex h-16 items-center transition-colors duration-300"
+      className={`fixed top-[15px] w-[90%] left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-[15px] ${
+        isScrolled 
+          ? 'bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md shadow-lg border border-white/20' 
+          : 'bg-transparent border border-transparent'
+      }`}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4">
+      <div className="mx-auto flex h-16 w-full items-center justify-between px-6">
         {/* Brand */}
         {brand ?? (
-          <NavLink to="/" className="font-heading text-xl font-bold tracking-tight text-orange-500">
+          <NavLink 
+            to="/" 
+            className={`font-heading text-xl font-bold tracking-tight transition-colors ${
+              isScrolled ? 'text-orange-500' : 'text-white'
+            }`}
+          >
             Pathfinder
           </NavLink>
         )}
@@ -75,7 +69,9 @@ export default function Navbar({ items, brand }: NavbarProps) {
                   'inline-flex items-center gap-1 text-sm font-medium transition-colors',
                   isActive
                     ? 'text-orange-500'
-                    : 'text-gray-700 hover:text-orange-600 dark:text-gray-200',
+                    : isScrolled 
+                      ? 'text-gray-700 hover:text-orange-600 dark:text-gray-200'
+                      : 'text-white/90 hover:text-white',
                 ].join(' ')
               }
             >
@@ -86,19 +82,20 @@ export default function Navbar({ items, brand }: NavbarProps) {
 
         {/* Right side auth area */}
         {user ? (
-          /* ----- Logged-in avatar + dropdown ----- */
           <div className="relative">
             <button
               onClick={() => setOpen(!open)}
-              className="h-9 w-9 rounded-full bg-orange-500 text-white flex items-center justify-center select-none"
+              className={`h-9 w-9 rounded-full flex items-center justify-center select-none transition-colors ${
+                isScrolled ? 'bg-orange-500 text-white' : 'bg-white/20 text-white backdrop-blur-sm'
+              }`}
             >
-              {/* {user.username.charAt(0).toUpperCase()} */}user
+              user
             </button>
 
             {open && (
               <div
                 onMouseLeave={() => setOpen(false)}
-                className="absolute right-0 mt-2 w-40 rounded-md bg-white dark:bg-neutral-800 shadow-lg py-1 text-sm"
+                className="absolute right-0 mt-2 w-40 rounded-md bg-white dark:bg-neutral-800 shadow-lg py-1 text-sm border border-gray-100 dark:border-neutral-700"
               >
                 <NavLink
                   to="/profile"
@@ -117,25 +114,36 @@ export default function Navbar({ items, brand }: NavbarProps) {
             )}
           </div>
         ) : (
-          /* ----- Not logged-in: Login & Register buttons ----- */
           <div className="hidden md:flex gap-3">
             <NavLink
               to="/login"
-              className="px-4 py-1.5 text-sm font-medium text-orange-600 border border-orange-500 rounded hover:bg-orange-50 dark:hover:bg-neutral-700"
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
+                isScrolled 
+                  ? 'text-orange-600 border border-orange-500 hover:bg-orange-50 dark:hover:bg-neutral-700'
+                  : 'text-white border border-white/50 hover:bg-white/10'
+              }`}
             >
               Login
             </NavLink>
             <NavLink
               to="/register"
-              className="px-4 py-1.5 text-sm font-medium text-white bg-orange-500 rounded hover:bg-orange-600"
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
+                isScrolled 
+                  ? 'text-white bg-orange-500 hover:bg-orange-600'
+                  : 'text-orange-600 bg-white hover:bg-white/90'
+              }`}
             >
               Register
             </NavLink>
           </div>
         )}
 
-        {/* Mobile hamburger (unchanged) */}
-        <button className="md:hidden p-2 text-gray-700 dark:text-gray-200 hover:text-orange-600">
+        {/* Mobile hamburger */}
+        <button 
+          className={`md:hidden p-2 transition-colors ${
+            isScrolled ? 'text-gray-700 hover:text-orange-600' : 'text-white hover:text-white/80'
+          }`}
+        >
           <span className="sr-only">Open menu</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
