@@ -83,10 +83,10 @@ function HeroBanner({ onSearch }: HeroProps) {
 
       <div className="relative z-10 flex flex-col items-center justify-center mb-0 text-center text-white">
         <h1 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
-          Find Your Next Learning Path
+          Chart Your Career Change Journey
         </h1>
         <p className="mt-2 opacity-90">
-          Curated roadmaps &amp; hands‑on stories from successful switchers
+          Real stories from those who successfully pivoted – learn from their wins, mistakes, and lightbulb moments.
         </p>
 
         {/* search */}
