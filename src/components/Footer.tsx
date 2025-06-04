@@ -5,7 +5,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-neutral-100 dark:bg-neutral-950 text-gray-700 dark:text-gray-300 transition-colors">
+    <footer className="bg-orange-100 dark:bg-neutral-950 text-gray-700 dark:text-gray-300 transition-colors mx-2 mb-2 rounded-xl">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         {/* ░░ TOP GRID ░░ */}
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
