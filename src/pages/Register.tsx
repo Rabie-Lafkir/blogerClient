@@ -1,8 +1,20 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../api/authService';
+import { useAuth } from '../hooks/useAuth';
+
+type Form = {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export const RegisterPage = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<Form>({
     firstName: '',
     lastName: '',
     username: '',
@@ -11,23 +23,64 @@ export const RegisterPage = () => {
     password: '',
     confirmPassword: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+
+  /* ------- helpers ------- */
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const validate = () => {
+    const err: Record<string, string> = {};
+    if (!form.firstName.trim()) err.firstName = 'Required';
+    if (!form.username.trim()) err.username = 'Required';
+    if (!/\S+@\S+\.\S+/.test(form.email)) err.email = 'Invalid email';
+    if (form.password.length < 6) err.password = 'Min 6 chars';
+    if (form.password !== form.confirmPassword)
+      err.confirmPassword = 'Mismatch';
+    setErrors(err);
+    return Object.keys(err).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting:', form);
-    // TODO: Validation and API call
+    if (!validate()) return;
+
+    try {
+      setIsLoading(true);
+      const user = await register({
+        username: form.username,
+        email: form.email,
+        password: form.password,
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phone: form.phone,
+      });
+      setUser(user as any);
+      navigate('/');
+    } catch (err: any) {
+      setErrors({ general: err.response?.data?.error || 'Registration failed' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  /* --------- UI (unchanged styles) --------- */
   return (
     <div className="min-h-screen flex items-center justify-center bg-orange-50 dark:bg-neutral-900 px-4 py-10 transition-colors duration-300">
       <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-semibold text-orange-600 dark:text-orange-400 mb-6 text-center">
           Create your account
         </h1>
+
+        {errors.general && (
+          <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 dark:bg-red-200 rounded">
+            {errors.general}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* First + Last Name */}
@@ -134,15 +187,14 @@ export const RegisterPage = () => {
             />
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-md transition"
+            disabled={isLoading}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-md transition disabled:opacity-50"
           >
-            Register
+            {isLoading ? 'Creating account…' : 'Register'}
           </button>
 
-          {/* Footer link */}
           <p className="text-sm text-center text-gray-600 dark:text-gray-300 mt-2">
             Already have an account?{' '}
             <Link to="/login" className="text-orange-600 dark:text-orange-400 hover:underline">
