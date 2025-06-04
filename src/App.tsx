@@ -5,6 +5,8 @@ import { LoginPage } from "./pages/Login";
 import Home from "./pages/Home";
 import { RegisterPage } from "./pages/Register";
 import ContactPage from "./pages/Contact";
+import ArticleDetail from "./pages/ArticleDetail";
+import CreateArticle from "./pages/CreateArticle";
 
 /**
  * Top‑level routing for the app.
@@ -23,7 +25,8 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/contact" element={<ContactPage />} />
-        
+        <Route path="/article/:slug" element={<ArticleDetail />} />
+        <Route path="/new" element={<CreateArticle />} />
       </Route>
 
       {/* Catch‑all: redirect unknown paths to home */}
