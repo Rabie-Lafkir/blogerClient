@@ -69,9 +69,11 @@ export default function ArticleDetail() {
       </div>
 
       {/* Placeholder when no body is returned */}
-      <div className="text-lg text-gray-700 dark:text-gray-300">
+      {article?.content ? <div className="text-lg text-gray-700 dark:text-gray-300">
+        <p>{article?.content}</p>
+      </div> : <div className="text-lg text-gray-700 dark:text-gray-300">
         <p>This article does not contain body content.</p>
-      </div>
+      </div> }
     </article>
   );
 }

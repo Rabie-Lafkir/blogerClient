@@ -4,6 +4,7 @@ export type Article = {
   _id: string;
   title: string;
   slug: string;
+  content: string;
   coverImage: string;
   category: { _id: string; name: string };
   author: { _id: string; username: string };
